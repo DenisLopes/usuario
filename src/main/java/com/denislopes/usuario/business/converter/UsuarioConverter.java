@@ -36,6 +36,7 @@ public class UsuarioConverter {
                 .complemento(enderecoDTO.getComplemento())
                 .cep(enderecoDTO.getCep())
                 .build();
+
     }
 
     public List<Telefone> paraListaTelefone(List<TelefoneDTO> telefoneDTOS) {
