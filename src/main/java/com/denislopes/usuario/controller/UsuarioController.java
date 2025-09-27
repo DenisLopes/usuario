@@ -2,16 +2,14 @@ package com.denislopes.usuario.controller;
 
 import com.denislopes.usuario.business.UsuarioService;
 import com.denislopes.usuario.business.dto.UsuarioDTO;
+import com.denislopes.usuario.infrastructure.entity.Usuario;
 import com.denislopes.usuario.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,6 +31,11 @@ public class UsuarioController {
                 new UsernamePasswordAuthenticationToken(usuarioDTO.getEmail(), usuarioDTO.getSenha())
         );
         return "Bearer " + jwtUtil.generateToken(authentication.getName());
+    }
+
+    @GetMapping
+    public ResponseEntity<Usuario> buscaUsuarioPorEmail(@RequestParam("email") String email) {
+        return ResponseEntity.ok(usuarioService.buscaUsuarioPorEmail(email));
     }
 
 }
