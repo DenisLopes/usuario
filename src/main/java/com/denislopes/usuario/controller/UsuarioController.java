@@ -1,8 +1,9 @@
 package com.denislopes.usuario.controller;
 
 import com.denislopes.usuario.business.UsuarioService;
+import com.denislopes.usuario.business.dto.EnderecoDTO;
+import com.denislopes.usuario.business.dto.TelefoneDTO;
 import com.denislopes.usuario.business.dto.UsuarioDTO;
-import com.denislopes.usuario.infrastructure.entity.Usuario;
 import com.denislopes.usuario.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<Usuario> buscaUsuarioPorEmail(@RequestParam("email") String email) {
+    public ResponseEntity<UsuarioDTO> buscaUsuarioPorEmail(@RequestParam("email") String email) {
         return ResponseEntity.ok(usuarioService.buscaUsuarioPorEmail(email));
     }
 
@@ -48,5 +49,17 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDTO> atualizaDadosUsuario(@RequestBody UsuarioDTO usuarioDTO,
                                                            @RequestHeader("Authorization") String token) {
         return ResponseEntity.ok(usuarioService.atualizaDadosUsuario(token, usuarioDTO));
+    }
+
+    @PutMapping("/endereco")
+    public ResponseEntity<EnderecoDTO> atualizaDadosEndereco(@RequestBody EnderecoDTO enderecoDTO,
+                                                             @RequestParam("id") Long id){
+        return ResponseEntity.ok(usuarioService.atualizaDadosEndereco(id, enderecoDTO));
+    }
+
+    @PutMapping("/telefone")
+    public ResponseEntity<TelefoneDTO> atualizaDadosTelefone(@RequestBody TelefoneDTO telefoneDTO,
+                                                             @RequestParam("id") Long id){
+        return ResponseEntity.ok(usuarioService.atualizaDadosTelefone(id, telefoneDTO));
     }
 }
